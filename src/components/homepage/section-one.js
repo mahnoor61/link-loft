@@ -18,7 +18,7 @@ export default function SectionOne() {
       minHeight:'100vh',
       backgroundPosition: 'center',
        overflowX: 'hidden',
-      py: { xs: 6, md: 10 }
+      py: { xs: 0, md: 10 }
     }}>
 
       <Box
@@ -26,6 +26,7 @@ export default function SectionOne() {
           position: 'absolute',
           top: '10%',
           right: 0,
+          display: { xs: 'none', md: 'block' },
           // height: '100%',
           width: { xs: '100vw', md: '45vw' },
           borderRadius: 3,
@@ -47,7 +48,7 @@ export default function SectionOne() {
             <Typography color="text.secondary" sx={{ mb: 4, maxWidth: 520 }}>
               Your Virtual 360° Link Hub. Create a 360° loft, add your links, and share everywhere.
             </Typography>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <Stack direction={{ xs: 'row', sm: 'row' }} spacing={2}>
               <Link href="/" style={{ textDecoration: 'none' }}>
                 <Button size="large" variant="contained"
                         sx={{
@@ -69,6 +70,21 @@ export default function SectionOne() {
             </Stack>
           </Box>
         </Box>
+        <Box
+        sx={{
+          // position: 'absolute',
+          // top: '10%',
+          // right: 0,
+          display: { xs: 'block', md: 'none' },
+          // height: '100%',
+          // width: { xs: '100vw', md: '45vw' },
+          borderRadius: 3,
+         
+        }}
+        data-aos="fade-left"
+      >
+        <img src={`${WEB_URL}/p1.png`} alt="Living room" style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} />
+      </Box>
       </Container>
     </Box>
   );
