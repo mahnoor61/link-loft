@@ -9,7 +9,7 @@ import {
   Stack,
   TextField,
   Typography,
-  CircularProgress, Card, Grid
+  CircularProgress, Card, Grid, FormControlLabel, Switch
 } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useMounted } from '../hooks/use-mounted';
@@ -20,9 +20,11 @@ import { useAuth } from '../hooks/use-auth';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL;
+import Link from 'next/link';
 const Page = () => {
   const [loading, setLoading] = useState(false);
   const [googleButtonDisabled, setGoogleButtonDisabled] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const router = useRouter();
   // const { transactionId } = router.query;
 
@@ -105,111 +107,78 @@ const Page = () => {
           Login | {process.env.NEXT_PUBLIC_APP_NAME}
         </title>
       </Head>
-      <Box
-        component="main"
-        sx={{
-          display: 'flex',
-          flex: '1 1 auto',
-          height: '100vh'
-        }}
-      >
-        <Grid
-          container
-          sx={{
-            flex: '1 1 auto',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <Card
-            sx={{
-              backgroundColor: 'rgb(253,229,209)',
-              border: '8px outset rgb(173, 47, 145)',
-              p: 3,
-              width: 500,
-              m: 2
-            }}>
-            <Typography variant="h4" sx={{ mb: 1 }}>
-              Login
-            </Typography>
-            <Typography
-              color="text.secondary"
-              variant="body2"
-              sx={{ mb: 1 }}
-            >
-              Please provide your email to log in.
-            </Typography>
-            <form
-              noValidate
-              onSubmit={formik.handleSubmit}
-            >
-              <Stack spacing={3}>
-                <TextField
-                  error={!!(formik.touched.email && formik.errors.email)}
-                  fullWidth
-                  helperText={formik.touched.email && formik.errors.email}
-                  label="Email Address"
-                  name="email"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="email"
-                  value={formik.values.email}
-                />
-              </Stack>
-              {
-                loading && <Box sx={{ textAlign: 'center', mt: 5 }}><CircularProgress/></Box>
-              }
-              {formik.errors.submit && (
-                <Typography
-                  color="error"
-                  sx={{ mt: 3 }}
-                  variant="body2"
-                >
-                  {formik.errors.submit}
-                </Typography>
-              )}
-              <Button
-                fullWidth
-                size="large"
-                sx={{
-                  mt: 3
-                }}
-                type="submit"
-                disabled={formik.isSubmitting}
-              >
-                Login
-              </Button>
-              {/*<Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>*/}
-              {/*  <hr style={{ width: '40%', color: 'grey' }}/>*/}
-              {/*  <Typography>or</Typography>*/}
-              {/*  <hr style={{ width: '40%' }}/>*/}
-              {/*</Box>*/}
-              {/*<Button*/}
-              {/*  fullWidth*/}
-              {/*  size="large"*/}
-              {/*  type="submit"*/}
-              {/*  sx={{*/}
-              {/*    mt: 2,*/}
-              {/*    bgcolor: '#FDE5D1',*/}
-              {/*    padding: '8px 20px',*/}
-              {/*    border: '1px solid #AD2F91',*/}
-              {/*    color: '#AD2F91',*/}
-              {/*    display: 'flex',*/}
-              {/*    justifyContent: 'center',*/}
-              {/*    gap: { md: 3, xs: 1 },*/}
-              {/*    '&:hover': {*/}
-              {/*      backgroundColor: 'transparent'*/}
-              {/*    }*/}
-              {/*  }}*/}
-              {/*  disabled={googleButtonDisabled}*/}
-              {/*  onClick={() => handleGoogleSignIn()}*/}
-              {/*>*/}
-              {/*  <img src={`${WEB_URL}/google.png`} width="30px"/>*/}
-              {/*  <Typography>Sign in with google</Typography>*/}
-              {/*</Button>*/}
-            </form>
-          </Card>
-          {/*</Grid>*/}
+      <Box component="main" sx={{ display: 'flex', flex: '1 1 auto', height: '100vh', backgroundColor: '#FFF2F9' }}>
+        <Grid container  data-aos="zoom-in" sx={{ flex: '1 1 auto', height: '100%' }}>
+          {/* Left column: sign-in card */}
+          <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: { xs: 3, md: 6 } }}>
+            <Box sx={{ width: '100%', maxWidth: 420 }}>
+              <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }}>Welcome Back</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 , mt:3}}>Enter your email to sign in</Typography>
+
+              <Box >
+                <form noValidate onSubmit={formik.handleSubmit}>
+                  <Stack spacing={2}>
+                    <TextField
+                      error={!!(formik.touched.email && formik.errors.email)}
+                      fullWidth
+                      helperText={formik.touched.email && formik.errors.email}
+                      label="Email"
+                      name="email"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
+                      type="email"
+                      value={formik.values.email}
+                      size="small"
+                    />
+                    <TextField
+                      fullWidth
+                      label="Password"
+                      type="password"
+                      size="small"
+                      // disabled
+                      // helperText="Password is not required. We send a code to your email."
+                    />
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={rememberMe}
+                          onChange={(e) => setRememberMe(e.target.checked)}
+                          sx={{
+                            '& .MuiSwitch-switchBase.Mui-checked': { color: '#FF80C3' },
+                            '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': { backgroundColor: '#FF80C3' },
+                            '& .MuiSwitch-track': { opacity: 1, backgroundColor: 'rgba(0,0,0,0.25)' }
+                          }}
+                        />
+                      }
+                      label="Remember me"
+                    />
+
+                    {loading && <Box sx={{ textAlign: 'center', mt: 1 }}><CircularProgress size={24}/></Box>}
+                    {formik.errors.submit && (
+                      <Typography color="error" sx={{ mt: 1 }} variant="body2">{formik.errors.submit}</Typography>
+                    )}
+
+                    <Button fullWidth size="large" type="submit" disabled={formik.isSubmitting} sx={{ mt: 1 , backgroundColor: '#FF80C3', color: '#FFFFFF', '&:hover': { backgroundColor: '#FF80C3', color: '#FFFFFF' } , borderRadius: 12}}>
+                      Sign in
+                    </Button>
+                  </Stack>
+                </form>
+              </Box>
+
+              <Typography variant="body2" sx={{ mt: 2 }}>
+                Don’t have an account? <Box component="span" sx={{ color: '#FF80C3', cursor: 'pointer' }}>
+                  <Link style={{ color: '#FF80C3', textDecoration: 'none' }} href="/signup">Sign up</Link>
+                  </Box>
+              </Typography>
+            </Box>
+          </Grid>
+
+          {/* Right column: background image with centered logo */}
+          <Grid item xs={12} md={6} sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', justifyContent: 'center', backgroundImage: `url(/signInBg.png)`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+            <Box sx={{ textAlign: 'center' }}>
+              <img src="/signinlogo.png" alt="Logo" style={{ width: 180, maxWidth: '60%' }} />
+            </Box>
+          </Grid>
         </Grid>
       </Box>
     </>

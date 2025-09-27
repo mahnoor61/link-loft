@@ -64,7 +64,7 @@ export default function SectionOne() {
                   Try A Loft
                 </Button>
               </Link>
-              <Link href="/" style={{ textDecoration: 'none' }}>
+              <Link href="/signup" style={{ textDecoration: 'none' }}>
                 <Button size="large" variant="outlined">Signup for Free</Button>
               </Link>
             </Stack>
