@@ -176,7 +176,7 @@ const Page = () => {
           {/* Right column: background image with centered logo */}
           <Grid item xs={12} md={6} sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', justifyContent: 'center', backgroundImage: `url(/signInBg.png)`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <Box sx={{ textAlign: 'center' }}>
-              <img src="/signinlogo.png" alt="Logo" style={{ width: 180, maxWidth: '60%' }} />
+              <img src="/signinlogo.png" alt="Logo" style={{ width: 180, maxWidth: '100%' }} />
             </Box>
           </Grid>
         </Grid>
