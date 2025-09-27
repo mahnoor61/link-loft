@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="54" height="22" viewBox="0 0 54 22">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fa5ea9;
+        filter: url(#filter);
+      }
+
+      .cls-1, .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        fill: #fff1c3;
+      }
+    </style>
+    <filter id="filter" x="1.844" y="1.438" width="50.312" height="20.563" filterUnits="userSpaceOnUse">
+      <feOffset result="offset" dy="4" in="SourceAlpha"/>
+      <feGaussianBlur result="blur"/>
+      <feFlood result="flood" flood-color="#921a0e"/>
+      <feComposite result="composite" operator="in" in2="blur"/>
+      <feOffset result="offset-2" dy="2" in="SourceAlpha"/>
+      <feGaussianBlur result="blur-2"/>
+      <feFlood result="flood-2" flood-color="#a21b06"/>
+      <feComposite result="composite-2" operator="in" in2="blur-2"/>
+      <feBlend result="blend" in2="composite"/>
+      <feOffset result="offset-3" dy="2" in="SourceAlpha"/>
+      <feGaussianBlur result="blur-3"/>
+      <feFlood result="flood-3" flood-color="#b71d05"/>
+      <feComposite result="composite-3" operator="in" in2="blur-3"/>
+      <feBlend result="blend-2" in2="blend"/>
+      <feBlend result="blend-3" in="SourceGraphic"/>
+      <feImage preserveAspectRatio="none" x="1.84375" y="1.4375" width="50.312" height="15.656" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAuMzEyIiBoZWlnaHQ9IjE1LjY1NiIgdmlld0JveD0iMCAwIDUwLjMxMiAxNS42NTYiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50KTsKICAgICAgfQogICAgPC9zdHlsZT4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50IiB4MT0iMjUuMTU2IiB5MT0iMTUuNjU2IiB4Mj0iMjUuMTU2IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iLTAuMjUiIHN0b3AtY29sb3I9IiNlYThlMTciLz4KICAgICAgPHN0b3Agb2Zmc2V0PSItMC4xODEiIHN0b3AtY29sb3I9IiNlYThlMTciLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIwLjUyNSIgc3RvcC1jb2xvcj0iI2VkODExYiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjAuNTgzIiBzdG9wLWNvbG9yPSIjZjJjMjJmIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMS4wMjIiIHN0b3AtY29sb3I9IiNmZWU1ODkiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxLjI1IiBzdG9wLWNvbG9yPSIjZmVlNTg5Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCBjbGFzcz0iY2xzLTEiIHdpZHRoPSI1MC4zMTIiIGhlaWdodD0iMTUuNjU2Ii8+Cjwvc3ZnPgo="/>
+      <feComposite result="composite-4" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend-4" in2="blend-3"/>
+    </filter>
+  </defs>
+  <path id="SHOP" class="cls-1" d="M6.762,6.218c0.145-1.982,3.045-.7,3.867,1.354,2.949-1.257,2.465-3.625.6-4.955C8.018,0.345,2.411,1.8,2.121,5.832c-0.242,3.36,1.764,3.94,4.423,4.979,0.508,0.242,2.393.483,2.1,1.644-0.363,1.5-2.925.846-4.351-1.305A2.241,2.241,0,0,0,2,14.122c1.45,3.746,8.75,4.109,10.828.242a4.416,4.416,0,0,0-.459-4.786C10.75,7.959,6.641,7.717,6.762,6.218ZM26.337,3.681c0.048-1.6-1.039-2.175-2.369-2.175-2.562,0-2.514,1.74-2.489,2.49,0.024,0.8.024,1.764,0.024,3.529a14.471,14.471,0,0,1-2.054.266C19.425,6.1,19.4,4.6,19.425,3.681c0.048-1.6-1.039-2.175-2.369-2.175a9.927,9.927,0,0,0-2.635.628c0.29,2.224.121,2.538,0.193,11.795,0.024,1.813.1,3.07,2.272,3.021,1.934,0,2.417-.773,2.634-1.015,0.024-1.088.024-2.876-.024-4.761a10.074,10.074,0,0,0,2.006-.242c0,0.894,0,1.861.024,3,0.024,1.813.1,3.07,2.272,3.021,1.934,0,2.417-.773,2.635-1.015C26.531,13.179,26.265,6.17,26.337,3.681Zm1.206,5.777c0,7.009,3.625,7.517,6.163,7.517,2.344,0,6.188-.653,6.212-7.517-0.024-5.873-2.635-7.952-6.139-7.952C30.082,1.505,27.544,3.777,27.544,9.457ZM33.78,5.445c0.266,0,1.281-.387,1.281,3.843,0,2.755-.435,4.326-1.305,4.326-0.725,0-1.305-.653-1.233-4.326C32.523,5.953,33.369,5.445,33.78,5.445Zm12.107,5.97c4.036,0.1,6.284-.725,6.26-5.052C52.122,0.756,45.935,1.119,41,1.771c0.242,4.3.193,8.532,0.193,13,0.072,2.9,3.674,2.465,5.027,1.257A37.063,37.063,0,0,1,45.887,11.415Zm0.024-6.478c1.281-.387,1.619.918,1.619,1.692-0.024,1.354-.508,2.054-1.619,1.982C45.887,7.6,45.838,5.953,45.911,4.937Z"/>
+  <path id="Ellipse_1_copy_10" data-name="Ellipse 1 copy 10" class="cls-2" d="M7.379,1.781c1.193,0,2.16.525,2.16,1.172S8.572,4.125,7.379,4.125,5.219,3.6,5.219,2.953,6.186,1.781,7.379,1.781Z"/>
+  <path id="Ellipse_1_copy_11" data-name="Ellipse 1 copy 11" class="cls-2" d="M16.375,2.9c1.071,0,1.939.472,1.939,1.054s-0.868,1.054-1.939,1.054-1.938-.472-1.938-1.054S15.3,2.9,16.375,2.9Z"/>
+  <path id="Ellipse_1_copy_12" data-name="Ellipse 1 copy 12" class="cls-2" d="M24.375,2.933c1.037,0,1.877.457,1.877,1.02s-0.84,1.02-1.877,1.02S22.5,4.517,22.5,3.953,23.338,2.933,24.375,2.933Z"/>
+  <path id="Ellipse_1_copy_13" data-name="Ellipse 1 copy 13" class="cls-2" d="M33.379,1.781c1.193,0,2.16.525,2.16,1.172s-0.967,1.172-2.16,1.172-2.16-.525-2.16-1.172S32.186,1.781,33.379,1.781Z"/>
+  <path id="Ellipse_1_copy_14" data-name="Ellipse 1 copy 14" class="cls-2" d="M46.379,1.781c1.193,0,2.16.525,2.16,1.172s-0.967,1.172-2.16,1.172-2.16-.525-2.16-1.172S45.186,1.781,46.379,1.781Z"/>
+</svg>

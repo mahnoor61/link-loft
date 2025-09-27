@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="22" viewBox="0 0 80 22">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fa5ea9;
+        filter: url(#filter);
+      }
+
+      .cls-1, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        filter: url(#filter-2);
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+    <filter id="filter" x="2.625" y="2.5" width="76.281" height="19.5" filterUnits="userSpaceOnUse">
+      <feOffset result="offset" dy="3" in="SourceAlpha"/>
+      <feGaussianBlur result="blur"/>
+      <feFlood result="flood" flood-color="#741c45"/>
+      <feComposite result="composite" operator="in" in2="blur"/>
+      <feBlend result="blend" in="SourceGraphic"/>
+      <feImage preserveAspectRatio="none" x="2.625" y="2.5" width="76.281" height="15.531" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNzYuMjgxIiBoZWlnaHQ9IjE1LjUzMSIgdmlld0JveD0iMCAwIDc2LjI4MSAxNS41MzEiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50KTsKICAgICAgfQogICAgPC9zdHlsZT4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50IiB4MT0iMzguMTQxIiB5MT0iMTUuNTMxIiB4Mj0iMzguMTQxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iLTAuMjUiIHN0b3AtY29sb3I9IiNmYTU2YTMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSItMC4xODIiIHN0b3AtY29sb3I9IiNmYTU2YTMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIwLjI4OSIgc3RvcC1jb2xvcj0iI2ZhNTZhMyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjAuNTgxIiBzdG9wLWNvbG9yPSIjZmZjNWUzIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMS4wMTUiIHN0b3AtY29sb3I9IiNmZmM1ZTMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxLjI1IiBzdG9wLWNvbG9yPSIjZmZjNWUzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCBjbGFzcz0iY2xzLTEiIHdpZHRoPSI3Ni4yODEiIGhlaWdodD0iMTUuNTMxIi8+Cjwvc3ZnPgo="/>
+      <feComposite result="composite-2" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend-2" in2="blend"/>
+    </filter>
+    <filter id="filter-2" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#ffeaf5"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="LOGOUT" class="cls-1" d="M7.625,13.672c-0.073-2.8.145-7.541-.29-10.224-0.6-1.354-3.867-.918-4.713-0.338,0.145,3,.193,7.033.266,10.2A7.227,7.227,0,0,0,3.2,16.548c0.749,1.523,5.172,1.378,7.469,1.184,2.659-.29,3.215-2.876,2.127-4.109A19.467,19.467,0,0,1,7.625,13.672Zm6.428-3.215c0,7.009,3.625,7.517,6.163,7.517,2.344,0,6.188-.653,6.212-7.517C26.4,4.584,23.794,2.505,20.289,2.505,16.591,2.505,14.053,4.777,14.053,10.457Zm6.236-4.012c0.266,0,1.281-.387,1.281,3.843,0,2.755-.435,4.326-1.305,4.326-0.725,0-1.305-.652-1.233-4.326C19.032,6.953,19.878,6.445,20.289,6.445ZM35.3,14.179c-4.036.483-3.94-7.662-1.112-7.614a1.506,1.506,0,0,1,1.209,1.861C36.747,8.693,38.583,8.4,38.777,6.3,39.26,1.007,26.934.4,27.417,10.336c0.073,6.671,4.4,7.662,6.091,7.638a7.667,7.667,0,0,0,5.535-1.934c0.072-1.6.435-3.6-.072-4.882-0.387-.991-2.61-0.652-3.553-0.338A29.031,29.031,0,0,1,35.3,14.179Zm5.025-3.722c0,7.009,3.626,7.517,6.163,7.517,2.344,0,6.188-.653,6.212-7.517-0.024-5.873-2.634-7.952-6.139-7.952C42.859,2.505,40.322,4.777,40.322,10.457Zm6.236-4.012c0.266,0,1.281-.387,1.281,3.843,0,2.755-.435,4.326-1.305,4.326-0.725,0-1.305-.652-1.233-4.326C45.3,6.953,46.147,6.445,46.557,6.445Zm14.21-3.021c-0.121,1.45,1.619,11.142-.822,11.191-2.3.048-.943-9.716-1.063-10.876-0.169-1.5-3.48-1.547-5.076-.338,0.024,2.683-.048,6.091,0,8.991,0.072,3.6,1.958,5.825,6.405,5.656,3.529-.145,5.172-1.74,5.752-5.97A24.624,24.624,0,0,0,65.5,3.714C65.118,1.925,61.976,2.384,60.767,3.424ZM70.53,6.953c0,1.378-.024,2.9.048,7.589,0.024,1.885.1,3.432,2.272,3.384,1.933,0,2.417-.773,2.635-1.015,0.072-2.1-.073-6.7-0.121-9.886,0.532,0,1.039,0,1.5-.024a1.924,1.924,0,0,0,2.054-2.248c-0.024-1.45-1.209-2.224-2.852-2.224H71.473c-3.65.024-3.891,0.024-4.181,0C66.614,5.382,67.025,6.9,69.8,6.953H70.53Z"/>
+  <g class="cls-2">
+    <path id="Ellipse_1_copy_16" data-name="Ellipse 1 copy 16" class="cls-3" d="M4.922,3.869c1.031,0,1.868.415,1.868,0.928s-0.836.928-1.868,0.928S3.054,5.309,3.054,4.8,3.89,3.869,4.922,3.869Z"/>
+    <path id="Ellipse_1_copy_17" data-name="Ellipse 1 copy 17" class="cls-3" d="M19.922,3.869c1.031,0,1.867.415,1.867,0.928s-0.836.928-1.867,0.928S18.054,5.309,18.054,4.8,18.89,3.869,19.922,3.869Z"/>
+    <path id="Ellipse_1_copy_18" data-name="Ellipse 1 copy 18" class="cls-3" d="M33.922,3.869c1.031,0,1.867.415,1.867,0.928s-0.836.928-1.867,0.928S32.054,5.309,32.054,4.8,32.89,3.869,33.922,3.869Z"/>
+    <path id="Ellipse_1_copy_19" data-name="Ellipse 1 copy 19" class="cls-3" d="M45.922,3.869c1.031,0,1.868.415,1.868,0.928s-0.836.928-1.868,0.928S44.054,5.309,44.054,4.8,44.89,3.869,45.922,3.869Z"/>
+    <path id="Ellipse_1_copy_20" data-name="Ellipse 1 copy 20" class="cls-3" d="M55.922,3.869c1.031,0,1.867.415,1.867,0.928s-0.836.928-1.867,0.928S54.054,5.309,54.054,4.8,54.89,3.869,55.922,3.869Z"/>
+    <path id="Ellipse_1_copy_21" data-name="Ellipse 1 copy 21" class="cls-3" d="M62.922,3.869c1.031,0,1.867.415,1.867,0.928s-0.836.928-1.867,0.928S61.054,5.309,61.054,4.8,61.89,3.869,62.922,3.869Z"/>
+    <path id="Ellipse_1_copy_22" data-name="Ellipse 1 copy 22" class="cls-3" d="M69.922,3.869c1.031,0,1.868.415,1.868,0.928s-0.836.928-1.868,0.928S68.054,5.309,68.054,4.8,68.89,3.869,69.922,3.869Z"/>
+    <path id="Ellipse_1_copy_23" data-name="Ellipse 1 copy 23" class="cls-3" d="M75.922,3.869c1.031,0,1.868.415,1.868,0.928s-0.836.928-1.868,0.928S74.054,5.309,74.054,4.8,74.89,3.869,75.922,3.869Z"/>
+    <path id="Ellipse_1_copy_24" data-name="Ellipse 1 copy 24" class="cls-3" d="M83.922,3.869c1.031,0,1.868.415,1.868,0.928s-0.836.928-1.868,0.928S82.054,5.309,82.054,4.8,82.89,3.869,83.922,3.869Z"/>
+  </g>
+</svg>
