@@ -11,11 +11,11 @@ const Favicon = () => (
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="/logo.png"
+      href="/logo1.png"
     />
     <link
       rel="icon"
-      href={`${WEB_URL}/logo.png`}
+      href={`${WEB_URL}/logo1.png`}
     />
     <link
       rel="icon"
