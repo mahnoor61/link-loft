@@ -8,7 +8,7 @@ import {
   Stack,
   Avatar
 } from '@mui/material';
-
+const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL;
 export default function LoadingScreen() {
   const router = useRouter();
   const { name, username, avatar } = router.query;
@@ -25,40 +25,43 @@ export default function LoadingScreen() {
       <Box
         component="main"
         sx={{
+             backgroundImage: `url(${WEB_URL}/loadingscreen.png)`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center center',
+      backgroundSize: 'cover',
           minHeight: '100vh',
           width: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           p: { xs: 2, md: 6 },
-          background: 'linear-gradient(180deg, #0B2731 0%, #1A1F3A 45%, #2A0F22 100%)',
-          position: 'relative',
-          overflow: 'hidden'
+        //   background: 'linear-gradient(180deg, #0B2731 0%, #1A1F3A 45%, #2A0F22 100%)',
+        //   position: 'relative',
+        //   overflow: 'hidden'
         }}
       >
-        <Grid container spacing={4} alignItems="center">
+        <Grid data-aos="zoom-in" container spacing={4} alignItems="center">
           {/* Left content */}
           <Grid item xs={12} md={7}>
-            <Stack spacing={4} sx={{ alignItems: { xs: 'center', md: 'flex-start' }, textAlign: { xs: 'center', md: 'left' } }}>
-              <Box>
-                <img src="/logo3.png" alt="Logo" style={{ height: 56 }} />
+            <Stack spacing={4} sx={{ alignItems: 'center', textAlign: 'center' }}>
+              <Box sx={{ height: 120, width: { xs: '60%', md: '40%' }, maxWidth: 520, overflow: 'hidden', display: 'flex', justifyContent: 'center' }}>
+                <img src="/hd.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </Box>
-              <Box>
-                <Typography variant="h3" sx={{ color: '#FFFFFF', fontWeight: 700 }}>Welcome to</Typography>
-                <Typography variant="h3" sx={{ color: '#FFFFFF', fontWeight: 700 }}>
+                <Typography variant="h2" sx={{ color: '#FFFFFF', fontWeight: 700 }}>Welcome to</Typography>
+                <Typography variant="h2" sx={{ color: '#FFFFFF', fontWeight: 700 }}>
                   {displayName}
                   {"'"}s LOFT
                 </Typography>
-              </Box>
+            
               <Box>
-                <Typography sx={{ color: '#FFFFFF', opacity: 0.9, fontSize: 20, mb: 1 }}>Loading</Typography>
+                <Typography sx={{ color: '#FFFFFF', opacity: 0.9, fontSize: 30, mb: 1, textAlign: { xs: 'center', md: 'center' } }}>Loading</Typography>
                 {/* Striped animated progress bar */}
                 <Box
                   sx={{
                     width: 280,
                     height: 8,
                     borderRadius: 8,
-                    backgroundImage: 'repeating-linear-gradient(45deg, #FF80C3 0 12px, #FFFFFF 12px 24px)',
+                    backgroundImage: 'repeating-linear-gradient(45deg, #FF80C3 0 12px,rgb(7, 7, 7) 12px 24px)',
                     backgroundSize: '28px 28px',
                     animation: 'barberpole 1.2s linear infinite',
                     boxShadow: '0 0 0 2px rgba(255,128,195,0.4) inset'
@@ -69,11 +72,11 @@ export default function LoadingScreen() {
           </Grid>
 
           {/* Right profile card */}
-          <Grid item xs={12} md={5} sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'flex-start' } }}>
+          <Grid item xs={12} md={5} sx={{ display: 'flex', justifyContent: 'center' }}>
             <Card
               sx={{
-                width: 320,
-                height: 360,
+                width: 300,
+                height: 350,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
