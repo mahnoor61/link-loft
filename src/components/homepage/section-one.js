@@ -15,26 +15,26 @@ export default function SectionOne() {
       // backgroundSize: 'cover',
       height:'100%',
       position:'relative',
-      minHeight:'100vh',
+      // minHeight:'100vh',
       backgroundPosition: 'center',
        overflowX: 'hidden',
       py: { xs: 0, md: 10 }
     }}>
 
       <Box
-        sx={{
-          position: 'absolute',
-          top: '10%',
-          right: 0,
-          display: { xs: 'none', md: 'block' },
-          // height: '100%',
-          width: { xs: '100vw', md: '45vw' },
-          borderRadius: 3,
+        // sx={{
+        //   position: 'absolute',
+        //   top: '10%',
+        //   right: 0,
+        //   display: { xs: 'none', md: 'block' },
+        //   // height: '100%',
+        //   // width: { xs: '100vw', md: '35vw' },
+        //   borderRadius: 3,
          
-        }}
-        data-aos="fade-left"
-      >
-        <img src={`${WEB_URL}/p1.png`} alt="Living room" style={{ width: '100%', height: '100%', display: 'block' }} />
+        // }}
+         data-aos="fade-left"
+      > 
+        <img src={`${WEB_URL}/p1.png`} alt="Living room" style={{ width: '50%', display: 'block' , position:'absolute', right: 0}} />
       </Box>
       <Container maxWidth="lg">
         <Box sx={{height:'100%' ,py:10,display: 'flex', alignItems: 'center' }}>
