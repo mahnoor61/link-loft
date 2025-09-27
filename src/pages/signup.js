@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import NextLink from 'next/link';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -161,7 +162,10 @@ const Page = () => {
               </form>
 
               <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-                Already have an account? <a href="/login" style={{ color: '#FF80C3', textDecoration: 'none' }}>Sign in</a>
+                Already have an account?{' '}
+                <Box component={NextLink} href="/login" sx={{ color: '#FF80C3', textDecoration: 'none' }}>
+                  Sign in
+                </Box>
               </Typography>
             </Card>
           </Grid>
