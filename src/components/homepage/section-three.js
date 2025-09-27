@@ -13,10 +13,11 @@ export default function SectionThree() {
   return (
     <>
     <Box sx={{
-      backgroundImage: `url(${WEB_URL}/bg.png)`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
+        backgroundColor: '#FFFBFA',
+      // backgroundImage: `url(${WEB_URL}/bg.png)`,
+      // backgroundRepeat: 'no-repeat',
+      // backgroundSize: 'cover',
+      // backgroundPosition: 'center'
 
     }}>
     <Container maxWidth="lg" sx={{ height:'100%',

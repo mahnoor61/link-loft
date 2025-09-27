@@ -9,9 +9,10 @@ export default function SectionOne() {
 
   return (
     <Box sx={{
-      backgroundImage: `url(${WEB_URL}/bg.png)`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
+      backgroundColor: '#FFFBFA',
+      // backgroundImage: `url(${WEB_URL}/bg.png)`,
+      // backgroundRepeat: 'no-repeat',
+      // backgroundSize: 'cover',
       height:'100%',
       position:'relative',
       minHeight:'100vh',
