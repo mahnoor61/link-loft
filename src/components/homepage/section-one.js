@@ -16,6 +16,7 @@ export default function SectionOne() {
       position:'relative',
       minHeight:'100vh',
       backgroundPosition: 'center',
+       overflowX: 'hidden',
       py: { xs: 6, md: 10 }
     }}>
 
@@ -27,7 +28,7 @@ export default function SectionOne() {
           // height: '100%',
           width: { xs: '100vw', md: '45vw' },
           borderRadius: 3,
-          overflow: 'hidden'
+         
         }}
         data-aos="fade-left"
       >
