@@ -44,11 +44,11 @@ export default function LoadingScreen() {
           {/* Left content */}
           <Grid item xs={12} md={7}>
             <Stack spacing={4} sx={{ alignItems: 'center', textAlign: 'center' }}>
-              <Box sx={{ height: 120, width: { xs: '60%', md: '40%' }, maxWidth: 520, overflow: 'hidden', display: 'flex', justifyContent: 'center' }}>
+              <Box sx={{ height: 70, width: { xs: '60%', md: '40%' }, maxWidth: 520, overflow: 'hidden', display: 'flex', justifyContent: 'center' }}>
                 <img src="/hd.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </Box>
                 <Typography variant="h2" sx={{ color: '#FFFFFF', fontWeight: 700 }}>Welcome to</Typography>
-                <Typography variant="h2" sx={{ color: '#FFFFFF', fontWeight: 700 }}>
+                <Typography variant="h2" sx={{ color: '#FFFFFF', fontWeight: 700, mt:'0 !important' }}>
                   {displayName}
                   {"'"}s LOFT
                 </Typography>
