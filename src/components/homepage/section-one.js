@@ -34,7 +34,7 @@ export default function SectionOne() {
         // }}
          data-aos="fade-left"
       > 
-        <img src={`${WEB_URL}/p1.png`} alt="Living room" style={{ width: '50%', display: 'block' , position:'absolute', right: 0}} />
+        <img src={`${WEB_URL}/p1.png`} alt="Living room" style={{ width: '50%', display: {md:'block', xs:'none'}, position:'absolute', right: 0}} />
       </Box>
       <Container maxWidth="lg">
         <Box sx={{height:'100%' ,py:10,display: 'flex', alignItems: 'center' }}>
