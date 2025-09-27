@@ -74,7 +74,7 @@ export default function Navbar() {
 
             {/* Right: desktop actions */}
             <Stack direction="row" spacing={1} alignItems="center" sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Link href="/login" style={{ textDecoration: 'none' }}>
+              <Link href="/" style={{ textDecoration: 'none' }}>
                 <Button variant="text" size="small"
                         sx={{
                           backgroundColor: 'transparent',
@@ -86,7 +86,7 @@ export default function Navbar() {
                   Login
                 </Button>
               </Link>
-              <Link href="/verify_login" style={{ textDecoration: 'none' }}>
+              <Link href="/" style={{ textDecoration: 'none' }}>
                 <Button variant="outlined" size="small"
                         sx={{
                           backgroundColor: 'transparent',

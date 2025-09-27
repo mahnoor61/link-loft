@@ -26,7 +26,7 @@ export default function SectionTwo() {
 
             <Grid container spacing={{ xs: 3, md: 6 }}>
               <Grid item xs={12} md={4}>
-                <Box data-aos="zoom-in" sx={{ textAlign: 'center', p: { xs: 3, md: 5 }, borderRadius: 3, transition: 'transform .2s ease, box-shadow .2s ease', willChange: 'transform', '&:hover': { boxShadow: '0 8px 24px rgba(17,25,39,0.12)', transform: 'translateY(-2px)' } }} data-aos-delay="0">
+                <Box data-aos="zoom-in" sx={{ textAlign: 'center', p: { xs: 3, md: 5 }, borderRadius: 3, transition: 'transform .2s ease, box-shadow .2s ease', willChange: 'transform', '&:hover': { boxShadow: '0 8px 24px rgba(17,25,39,0.12)', transform: 'translateY(-2px)' }, cursor: 'pointer' }} data-aos-delay="0">
                   {/* <Box sx={{ display: 'inline-flex', p: 3, borderRadius: '50%', backgroundColor: 'rgba(173,47,145,0.08)', mb: 2 }}> */}
                     <img src={`${WEB_URL}/group.png`} alt="Create" style={{ width: 56, height: 56 }} />
                   {/* </Box> */}
@@ -42,7 +42,7 @@ export default function SectionTwo() {
                   borderRadius: 3,
                   boxShadow: '0 8px 24px rgba(17,25,39,0.06)'
                 }}> */}
-                <Box data-aos="zoom-in" sx={{ textAlign: 'center', p: { xs: 3, md: 5 }, borderRadius: 3, transition: 'transform .2s ease, box-shadow .2s ease', willChange: 'transform', '&:hover': { boxShadow: '0 8px 24px rgba(17,25,39,0.12)', transform: 'translateY(-2px)' } }} data-aos-delay="150">
+                <Box data-aos="zoom-in" sx={{ textAlign: 'center', cursor: 'pointer', p: { xs: 3, md: 5 }, borderRadius: 3, transition: 'transform .2s ease, box-shadow .2s ease', willChange: 'transform', '&:hover': { boxShadow: '0 8px 24px rgba(17,25,39,0.12)', transform: 'translateY(-2px)' } }} data-aos-delay="150">
                   {/* <Box sx={{ display: 'inline-flex', p: 3, borderRadius: '50%', backgroundColor: 'rgba(173,47,145,0.08)', mb: 2 }}> */}
                     <img src={`${WEB_URL}/design.png`} alt="Customize" style={{ width: 56, height: 56 }} />
                   {/* </Box> */}
@@ -53,7 +53,7 @@ export default function SectionTwo() {
               </Grid>
 
               <Grid item xs={12} md={4}>
-                <Box data-aos="zoom-in" sx={{ textAlign: 'center', p: { xs: 3, md: 5 }, borderRadius: 3, transition: 'transform .2s ease, box-shadow .2s ease', willChange: 'transform', '&:hover': { boxShadow: '0 8px 24px rgba(17,25,39,0.12)', transform: 'translateY(-2px)' } }} data-aos-delay="300">
+                <Box data-aos="zoom-in" sx={{ textAlign: 'center', cursor: 'pointer',p: { xs: 3, md: 5 }, borderRadius: 3, transition: 'transform .2s ease, box-shadow .2s ease', willChange: 'transform', '&:hover': { boxShadow: '0 8px 24px rgba(17,25,39,0.12)', transform: 'translateY(-2px)' } }} data-aos-delay="300">
                   {/* <Box sx={{ display: 'inline-flex', p: 3, borderRadius: '50%', backgroundColor: 'rgba(173,47,145,0.08)', mb: 2 }}> */}
                     <img src={`${WEB_URL}/Vector.png`} alt="Share" style={{ width: 56, height: 56 }} />
                   {/* </Box> */}

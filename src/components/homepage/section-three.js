@@ -56,6 +56,7 @@ export default function SectionThree() {
                 src={src}
                 alt={`Loft ${idx + 1}`}
                 sx={{
+                  cursor: 'pointer',
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',

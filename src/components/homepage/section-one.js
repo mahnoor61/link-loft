@@ -48,7 +48,7 @@ export default function SectionOne() {
               Your Virtual 360° Link Hub. Create a 360° loft, add your links, and share everywhere.
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <Link href="/view" style={{ textDecoration: 'none' }}>
+              <Link href="/" style={{ textDecoration: 'none' }}>
                 <Button size="large" variant="contained"
                         sx={{
                           borderRadius: 999,
@@ -63,7 +63,7 @@ export default function SectionOne() {
                   Try A Loft
                 </Button>
               </Link>
-              <Link href="/verify_login" style={{ textDecoration: 'none' }}>
+              <Link href="/" style={{ textDecoration: 'none' }}>
                 <Button size="large" variant="outlined">Signup for Free</Button>
               </Link>
             </Stack>
