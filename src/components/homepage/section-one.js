@@ -53,7 +53,11 @@ export default function SectionOne() {
                         sx={{
                           borderRadius: 999,
                           backgroundColor: theme.palette.text.primary,
-                          color: '#FFFFFF'
+                          color: '#FFFFFF',
+                          '&:hover': {
+                            backgroundColor: theme.palette.text.primary,
+                            color: '#FFFFFF'
+                          }
                         }}
                 >
                   Try A Loft
