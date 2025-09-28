@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
@@ -18,33 +17,23 @@ import {
 
 const Page = () => {
   const router = useRouter();
-  const { verifyRegistration } = useAuth();
-  const { token } = router.query;
+  const { forgotPassword } = useAuth();
 
   const formik = useFormik({
-    initialValues: {
-      code: '',
-      submit: null
-    },
+    initialValues: { email: '', submit: null },
     validationSchema: Yup.object({
-      code: Yup
-        .string()
-        .max(255)
-        .required('Verification code is required')
+      email: Yup.string().email('Must be a valid email').max(255).required('Email is required')
     }),
     onSubmit: async (values, helpers) => {
       helpers.setSubmitting(true);
       try {
-        await verifyRegistration({ code: values.code, unique_id: token });
-        toast.success('Verification successful. Please sign in.');
-        window.localStorage.removeItem('token');
-        router.push('/login');
+        const data = await forgotPassword({ email: values.email });
+        toast.success('Reset code sent. Please check your email.');
+        router.push(`/reset_password?token=${data.unique_id}`);
       } catch (error) {
-        console.log(error);
-        const msg = error?.response?.data?.msg || error?.message || 'Verification failed';
-        toast.error(msg);
+        toast.error(error.message);
         helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: msg });
+        helpers.setErrors({ submit: error.message });
       } finally {
         helpers.setSubmitting(false);
       }
@@ -54,32 +43,29 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>
-          Verify | {process.env.NEXT_PUBLIC_APP_NAME}
-        </title>
+        <title>Forgot Password | {process.env.NEXT_PUBLIC_APP_NAME}</title>
       </Head>
       <Box component="main" sx={{ display: 'flex', flex: '1 1 auto', height: '100vh', backgroundColor: '#FFF2F9' }}>
         <Grid container data-aos="zoom-in" sx={{ flex: '1 1 auto', height: '100%' }}>
-          {/* Left column: pop card */}
+          {/* Left column: card */}
           <Grid item xs={12} md={6} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: { xs: 3, md: 6 } }}>
             <Box sx={{ width: '100%', maxWidth: 420 }}>
               <Card sx={{ p: 3, borderRadius: 2, boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}>
-                <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }}>Verify your email</Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 , mt:3}}>Enter the code we sent to your email</Typography>
-
+                <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }}>Forgot your password?</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 3 , mt:3}}>Enter your email to receive a reset code</Typography>
                 <Box>
                   <form noValidate onSubmit={formik.handleSubmit}>
                     <Stack spacing={2}>
                       <TextField
-                        error={!!(formik.touched.code && formik.errors.code)}
+                        error={!!(formik.touched.email && formik.errors.email)}
                         fullWidth
-                        helperText={formik.touched.code && formik.errors.code}
-                        label="Verification Code"
-                        name="code"
+                        helperText={formik.touched.email && formik.errors.email}
+                        label="Email"
+                        name="email"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        type="text"
-                        value={formik.values.code}
+                        type="email"
+                        value={formik.values.email}
                         size="small"
                       />
 
@@ -91,10 +77,10 @@ const Page = () => {
                         {formik.isSubmitting ? (
                           <>
                             <CircularProgress size={20} sx={{ color: '#FFFFFF', mr: 1 }} />
-                            Verifying...
+                            Sending...
                           </>
                         ) : (
-                          'Verify'
+                          'Send Reset Code'
                         )}
                       </Button>
                     </Stack>
@@ -117,3 +103,5 @@ const Page = () => {
 };
 
 export default Page;
+
+

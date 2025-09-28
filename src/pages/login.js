@@ -38,6 +38,7 @@ const Page = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
+      password: '',
       submit: null
     },
     validationSchema: Yup.object({
@@ -45,27 +46,34 @@ const Page = () => {
         .string()
         .email('Must be a valid email')
         .max(255)
-        .required('Email is required')
+        .required('Email is required'),
+      password: Yup
+        .string()
+        .min(6, 'At least 6 characters')
+        .required('Password is required')
     }),
     onSubmit: async (values, helpers) => {
-      const loading = toast.loading(
-        'Verification code sent to your email. Please check your inbox.', { duration: 15000 });
+      const loadingId = toast.loading('Signing in...');
       setLoading(true);
       try {
-
-        await signIn({ email: values.email, method: 'email' });
-        formik.resetForm(); // Reset the form immediately
-        // router.push('/verify_login');
-        toast.dismiss(loading);
+        const signedInUser = await signIn({ email: values.email, password: values.password });
+        formik.resetForm();
+        toast.success('Login successful');
+        const displayName = encodeURIComponent(signedInUser?.username || signedInUser?.name || 'User');
+        const handle = encodeURIComponent(signedInUser?.username || '');
+        const rawAvatar = signedInUser?.profile_photo || '';
+        const base = API_BASE_URL || '';
+        const avatarAbs = rawAvatar?.startsWith('http') ? rawAvatar : (rawAvatar ? `${base}${rawAvatar}` : '');
+        const avatar = encodeURIComponent(avatarAbs);
+        router.push(`/loading?name=${displayName}&username=${handle}&avatar=${avatar}`);
       } catch (err) {
         toast.error(err.message);
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
-        helpers.setSubmitting(false);
-
       }
-      toast.dismiss(loading);
+      toast.dismiss(loadingId);
       setLoading(false);
+      helpers.setSubmitting(false);
     }
 
   });
@@ -131,13 +139,20 @@ const Page = () => {
                       size="small"
                     />
                     <TextField
+                      error={!!(formik.touched.password && formik.errors.password)}
                       fullWidth
+                      helperText={formik.touched.password && formik.errors.password}
                       label="Password"
+                      name="password"
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange}
                       type="password"
+                      value={formik.values.password}
                       size="small"
-                      // disabled
-                      // helperText="Password is not required. We send a code to your email."
                     />
+                    <Typography variant="body2" sx={{ textAlign: 'right' }}>
+                      <Link style={{ color: '#FF80C3', textDecoration: 'none' }} href="/forgot_password">Forgot your password?</Link>
+                    </Typography>
                     <FormControlLabel
                       control={
                         <Switch
@@ -153,13 +168,19 @@ const Page = () => {
                       label="Remember me"
                     />
 
-                    {loading && <Box sx={{ textAlign: 'center', mt: 1 }}><CircularProgress size={24}/></Box>}
                     {formik.errors.submit && (
                       <Typography color="error" sx={{ mt: 1 }} variant="body2">{formik.errors.submit}</Typography>
                     )}
 
                     <Button fullWidth size="large" type="submit" disabled={formik.isSubmitting} sx={{ mt: 1 , backgroundColor: '#FF80C3', color: '#FFFFFF', '&:hover': { backgroundColor: '#FF80C3', color: '#FFFFFF' } , borderRadius: 12}}>
-                      Sign in
+                      {formik.isSubmitting ? (
+                        <>
+                          <CircularProgress size={20} sx={{ color: '#FFFFFF', mr: 1 }} />
+                          Signing in...
+                        </>
+                      ) : (
+                        'Sign in'
+                      )}
                     </Button>
                   </Stack>
                 </form>

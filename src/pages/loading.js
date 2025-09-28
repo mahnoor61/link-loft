@@ -13,9 +13,9 @@ export default function LoadingScreen() {
   const router = useRouter();
   const { name, username, avatar } = router.query;
 
-  const displayName = typeof name === 'string' && name.length > 0 ? name : 'Profile Name';
-  const handle = typeof username === 'string' && username.length > 0 ? `@${username.replace(/^@/, '')}` : '@sophiefortune';
-  const avatarSrc = typeof avatar === 'string' && avatar.length > 0 ? avatar : '/loft3.png';
+  const displayName = typeof name === 'string' && name.length > 0 ? decodeURIComponent(name) : 'Profile Name';
+  const handle = typeof username === 'string' && username.length > 0 ? `@${decodeURIComponent(username).replace(/^@/, '')}` : '@player';
+  const avatarSrc = typeof avatar === 'string' && avatar.length > 0 ? decodeURIComponent(avatar) : '/loft3.png';
 
   return (
     <>
@@ -90,7 +90,7 @@ export default function LoadingScreen() {
               <Stack spacing={2} alignItems="center">
                 <Avatar src={avatarSrc} alt="avatar" sx={{ width: 120, height: 120 }} />
                 <Stack spacing={0} alignItems="center">
-                  <Typography sx={{ color: '#FFFFFF', fontWeight: 600 }}>Sophie Fortune</Typography>
+                  <Typography sx={{ color: '#FFFFFF', fontWeight: 600 }}>{displayName}</Typography>
                   <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: 12 }}>{handle}</Typography>
                 </Stack>
               </Stack>

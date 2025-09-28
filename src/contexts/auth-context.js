@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
@@ -114,47 +114,10 @@ export const AuthProvider = (props) => {
     []
   );
 
-  const signIn = async ({ email, method }) => {
-    // const storedEmail = window.localStorage.getItem('email');
-    // const loginEmail = email || storedEmail;
-    //
-    // if (!loginEmail) {
-    //   throw new Error('No email provided');
-    // }
+  const signIn = async ({ email, password }) => {
     try {
       const response = await axios.post(API_BASE_URL + `/api/user/login`,
         {
-          email
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-      const uniqueId = response.data.data;
-      // check for email login with input than redirect otherwise not
-      if (method === 'email') {
-        router.push(`/verify_login?token=${uniqueId}`);
-      }
-
-      dispatch({
-        type: HANDLERS.SIGN_IN,
-        payload: response.data.data
-      });
-    } catch (error) {
-      console.log(error);
-      throw new Error(error.response.data.msg);
-    }
-  };
-
-  const signUp = async ({ email, name, password }) => {
-
-    try {
-
-      const response = await axios.post(API_BASE_URL + '/api/user/register',
-        {
-          name,
           email,
           password
         },
@@ -164,11 +127,89 @@ export const AuthProvider = (props) => {
           }
         }
       );
-
+      const { user, token } = response.data.data;
+      window.localStorage.setItem('token', token);
+      dispatch({
+        type: HANDLERS.SIGN_IN,
+        payload: user
+      });
+      return user;
     } catch (error) {
-      throw new Error(error.response.data.msg);
+      console.log(error);
+      throw new Error(error.response?.data?.msg || 'Login failed');
+    }
+  };
+
+  const signUp = async ({ email, username, password, profilePhoto }) => {
+    try {
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('email', email);
+      formData.append('password', password);
+      if (profilePhoto) {
+        formData.append('profile_photo', profilePhoto);
+      }
+
+      const response = await axios.post(API_BASE_URL + '/api/user/register', formData);
+      return response.data.data; // { unique_id }
+    } catch (error) {
+      throw new Error(error.response?.data?.msg || 'Registration failed');
     }
 
+  };
+
+  const verifyRegistration = async ({ code, unique_id }) => {
+    try {
+      const response = await axios.post(API_BASE_URL + '/api/user/verify',
+        { code, unique_id },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      const { user, token } = response.data.data;
+      window.localStorage.setItem('token', token);
+      dispatch({
+        type: HANDLERS.SIGN_IN,
+        payload: user
+      });
+      return user;
+    } catch (error) {
+      throw new Error(error.response?.data?.msg || 'Verification failed');
+    }
+  };
+
+  const forgotPassword = async ({ email }) => {
+    try {
+      const response = await axios.post(API_BASE_URL + '/api/user/forgot-password',
+        { email },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      return response.data.data; // { unique_id }
+    } catch (error) {
+      throw new Error(error.response?.data?.msg || 'Failed to send reset code');
+    }
+  };
+
+  const resetPassword = async ({ code, unique_id, new_password }) => {
+    try {
+      await axios.post(API_BASE_URL + '/api/user/reset-password',
+        { code, unique_id, new_password },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      return true;
+    } catch (error) {
+      throw new Error(error.response?.data?.msg || 'Failed to reset password');
+    }
   };
 
   const signOut = () => {
@@ -188,6 +229,9 @@ export const AuthProvider = (props) => {
         ...state,
         signIn,
         signUp,
+        verifyRegistration,
+        forgotPassword,
+        resetPassword,
         signOut
       }}
     >

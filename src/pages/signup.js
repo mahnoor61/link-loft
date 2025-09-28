@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
@@ -18,36 +18,78 @@ import {
   Divider,
   IconButton,
   Switch,
-  FormControlLabel
+  FormControlLabel,
+  CircularProgress
 } from '@mui/material';
+import PhotoCameraOutlined from '@mui/icons-material/PhotoCameraOutlined';
+import Avatar from '@mui/material/Avatar';
 import {useAuth} from '../hooks/use-auth';
+import { signInWithGoogle, signInWithFacebook, signInWithApple } from '../firebase/firebase';
+import axios from 'axios';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 import toast from 'react-hot-toast';
 
 const Page = () => {
   const {signUp} = useAuth();
   const [rememberMe, setRememberMe] = useState(true);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [profilePreview, setProfilePreview] = useState(null);
   const router = useRouter();
 
+  useEffect(() => {
+    return () => {
+      if (profilePreview) URL.revokeObjectURL(profilePreview);
+    };
+  }, [profilePreview]);
+
   const formik = useFormik({
-    initialValues: { name: '', email: '', password: '' },
+    initialValues: { username: '', email: '', password: '' },
     validationSchema: Yup.object({
-      name: Yup.string().min(2).max(255).required('Name is required'),
+      username: Yup.string().min(2).max(255).required('Username is required'),
       email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
       password: Yup.string().min(6, 'At least 6 characters').required('Password is required')
     }),
     onSubmit: async (values, helpers) => {
+      helpers.setSubmitting(true);
       try {
-        await signUp({ name: values.name, email: values.email, password: values.password });
-        toast.success('Account created. Please check your email if verification is required.');
-        router.push('/login');
+        const data = await signUp({ username: values.username, email: values.email, password: values.password, profilePhoto });
+        toast.success('Verification code sent to your email');
+        router.push(`/verify_login?token=${data.unique_id}`);
       } catch (err) {
         toast.error(err.message || 'Failed to sign up');
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
+      } finally {
         helpers.setSubmitting(false);
       }
     }
   });
+
+  const handleSocialSignUp = async (provider) => {
+    try {
+      let data;
+      if (provider === 'google') data = await signInWithGoogle();
+      if (provider === 'facebook') data = await signInWithFacebook();
+      if (provider === 'apple') data = await signInWithApple();
+
+      let email = data?.user?.email || data?._tokenResponse?.email || data?.additionalUserInfo?.profile?.email || null;
+      if (!email && provider === 'apple') {
+        email = window.prompt('Apple did not share your email. Please enter your email to continue:') || null;
+      }
+      if (!email) throw new Error('No email available from provider');
+
+      if (!API_BASE_URL) throw new Error('API base URL is not configured');
+
+      const resp = await axios.post(`${API_BASE_URL}/api/signIn-with/google`, { email }, { headers: { 'Content-Type': 'application/json' } });
+      const userToken = resp?.data?.data?.token || resp?.data?.data?.token;
+      if (userToken) window.localStorage.setItem('token', userToken);
+      toast.success('Signed up successfully');
+      window.location.replace('/');
+    } catch (e) {
+      console.error(e);
+      toast.error(e?.message || 'Social sign-up failed');
+    }
+  };
 
   return (
     <>
@@ -85,13 +127,13 @@ const Page = () => {
               <Typography variant="subtitle2" align="center" sx={{ fontWeight: 700, mb: 2 }}>Register with</Typography>
 
               <Stack direction="row" spacing={2} justifyContent="center">
-                <IconButton size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="facebook">
+                {/* <IconButton onClick={() => handleSocialSignUp('facebook')} size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="facebook">
                   <FacebookIcon fontSize="small" />
-                </IconButton>
-                <IconButton size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="apple">
+                </IconButton> */}
+                <IconButton onClick={() => handleSocialSignUp('apple')} size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="apple">
                   <AppleIcon fontSize="small" />
                 </IconButton>
-                <IconButton size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="google">
+                <IconButton onClick={() => handleSocialSignUp('google')} size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="google">
                   <GoogleIcon fontSize="small" />
                 </IconButton>
               </Stack>
@@ -105,14 +147,14 @@ const Page = () => {
               <form noValidate onSubmit={formik.handleSubmit}>
                 <Stack spacing={2}>
                   <TextField
-                    name="name"
+                    name="username"
                     label="Username"
                     size="small"
-                    value={formik.values.name}
+                    value={formik.values.username}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    error={!!(formik.touched.name && formik.errors.name)}
-                    helperText={formik.touched.name && formik.errors.name}
+                    error={!!(formik.touched.username && formik.errors.username)}
+                    helperText={formik.touched.username && formik.errors.username}
                     fullWidth
                   />
                   <TextField
@@ -138,6 +180,33 @@ const Page = () => {
                     helperText={formik.touched.password && formik.errors.password}
                     fullWidth
                   />
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <Avatar src={profilePreview || undefined} sx={{ width: 56, height: 56 }} />
+                    <Button
+                      variant="contained"
+                      component="label"
+                      size="small"
+                      startIcon={<PhotoCameraOutlined/>}
+                      sx={{ backgroundColor: '#FF80C3', color: '#fff', '&:hover': { backgroundColor: '#FF80C3' } }}
+                    >
+                      Upload Photo
+                      <input
+                        hidden
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0] || null;
+                          setProfilePhoto(file);
+                          if (file) {
+                            const url = URL.createObjectURL(file);
+                            setProfilePreview(url);
+                          } else {
+                            setProfilePreview(null);
+                          }
+                        }}
+                      />
+                    </Button>
+                  </Stack>
 
                   <FormControlLabel
                     control={
@@ -155,8 +224,15 @@ const Page = () => {
                     sx={{ mt: 0.5 }}
                   />
 
-                  <Button type="submit" fullWidth size="large" sx={{ backgroundColor: '#FF80C3', color: '#fff', '&:hover': { backgroundColor: '#FF80C3' }, borderRadius: 2 }}>
-                    Sign up
+                  <Button type="submit" fullWidth size="large" disabled={formik.isSubmitting} sx={{ backgroundColor: '#FF80C3', color: '#fff', '&:hover': { backgroundColor: '#FF80C3' }, borderRadius: 2 }}>
+                    {formik.isSubmitting ? (
+                      <>
+                        <CircularProgress size={20} sx={{ color: '#FFFFFF', mr: 1 }} />
+                        Creating account...
+                      </>
+                    ) : (
+                      'Sign up'
+                    )}
                   </Button>
                 </Stack>
               </form>

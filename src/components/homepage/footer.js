@@ -113,13 +113,13 @@ export default function Footer() {
             spacing={{ xs: 1, sm: 1.5 }}
             alignItems={{ xs: 'flex-start', sm: 'center' }}
           >
-            <Link component={NextLink} href="/terms" underline="none" color="text.secondary" sx={{ '&:hover': { color: '#AD2F91' } }}>
+            <Link component={NextLink} href="/" underline="none" color="text.secondary" sx={{ '&:hover': { color: '#AD2F91' } }}>
               Terms & Conditions
             </Link>
             <Typography variant="caption" color="text.secondary" sx={{ display: { xs: 'none', sm: 'inline' } }}>
               ~
             </Typography>
-            <Link component={NextLink} href="/privacy" underline="none" color="text.secondary" sx={{ '&:hover': { color: '#AD2F91' } }}>
+            <Link component={NextLink} href="/" underline="none" color="text.secondary" sx={{ '&:hover': { color: '#AD2F91' } }}>
               Privacy Policy
             </Link>
           </Stack>
