@@ -48,7 +48,7 @@ export default function LoadingScreen() {
                 <img src="/hd.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </Box>
                 <Typography variant="h2" sx={{ color: '#FFFFFF', fontWeight: 700 }}>Welcome to</Typography>
-                <Typography variant="h2" sx={{ color: '#FFFFFF', fontWeight: 700, mt:'0 !important' }}>
+                <Typography variant="h3" sx={{ color: '#FFFFFF', fontWeight: 700, mt:'0 !important' }}>
                   {displayName}
                   {"'"}s LOFT
                 </Typography>
