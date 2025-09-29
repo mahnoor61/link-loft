@@ -80,11 +80,18 @@ const Page = () => {
 
       if (!API_BASE_URL) throw new Error('API base URL is not configured');
 
-      const resp = await axios.post(`${API_BASE_URL}/api/signIn-with/google`, { email }, { headers: { 'Content-Type': 'application/json' } });
+      const displayName = data?.user?.displayName || data?.additionalUserInfo?.profile?.name;
+const emailVerified = data?.user?.emailVerified || data?.additionalUserInfo?.profile?.emailVerified;
+const providerId = data?.providerId;
+      const resp = await axios.post(
+        `${API_BASE_URL}/api/signin-with/google`,
+        { email, username: displayName, signup_method: providerId ,emailVerified },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
       const userToken = resp?.data?.data?.token || resp?.data?.data?.token;
       if (userToken) window.localStorage.setItem('token', userToken);
       toast.success('Signed up successfully');
-      window.location.replace('/');
+      // window.location.replace('/');
     } catch (e) {
       console.error(e);
       toast.error(e?.message || 'Social sign-up failed');

@@ -146,6 +146,7 @@ export const AuthProvider = (props) => {
       formData.append('username', username);
       formData.append('email', email);
       formData.append('password', password);
+      formData.append('signup_method', 'manual');
       if (profilePhoto) {
         formData.append('profile_photo', profilePhoto);
       }

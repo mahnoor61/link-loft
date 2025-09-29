@@ -61,12 +61,20 @@ const saveUserProfileIfNew = async (result) => {
 
   try {
     const { displayName, photoURL, providerId } = extractDisplayNameAndPhoto(result);
+    const providerToMethod = {
+      'google.com': 'google',
+      'apple.com': 'apple',
+      'facebook.com': 'facebook',
+      'password': 'manual'
+    };
+    const signupMethod = providerToMethod[providerId] || 'unknown';
 
     // Always ensure the user document exists and update timestamps
     await setDoc(userRef, {
       uid: user.uid,
       email: user.email || null,
       providerId: providerId || null,
+      ...(isNewUser ? { signupMethod } : {}),
       // Only set displayName/photoURL if provided by provider; otherwise keep as-is/null
       ...(displayName ? { displayName } : {}),
       ...(photoURL ? { photoURL } : {}),
@@ -102,7 +110,8 @@ const mapAuthErrorMessage = (error) => {
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
-    await saveUserProfileIfNew(result);
+    console.log('result', result);
+    // await saveUserProfileIfNew(result);
     return result;
   } catch (err) {
     console.error('Google sign-in error', err);
@@ -112,7 +121,9 @@ export const signInWithGoogle = async () => {
 
 export const signInWithFacebook = async () => {
   try {
-    return await signInWithPopup(auth, facebookProvider);
+    const result = await signInWithPopup(auth, facebookProvider);
+    // await saveUserProfileIfNew(result);
+    return result;
   } catch (err) {
     console.error('Facebook sign-in error', err);
     throw err;
@@ -122,7 +133,7 @@ export const signInWithFacebook = async () => {
 export const signInWithApple = async () => {
   try {
     const result = await signInWithPopup(auth, appleProvider);
-    await saveUserProfileIfNew(result);
+    // await saveUserProfileIfNew(result);
     return result;
   } catch (err) {
     console.error('Apple sign-in error', err);

@@ -83,11 +83,13 @@ const Page = () => {
     // user data comes in data
     const data = await signInWithGoogle();
     const { email } = data.user;
-    await window.localStorage.setItem('userName', data.user.displayName);
+    const displayName = data?.user?.displayName || data?.additionalUserInfo?.profile?.name || '';
+    await window.localStorage.setItem('userName', displayName);
     try {
-      const response = await axios.post(API_BASE_URL + '/api/signIn-with/google',
+      const response = await axios.post(API_BASE_URL + '/api/signin-with/google',
         {
-          email
+          email,
+          username: displayName
         },
         {
           headers: {
