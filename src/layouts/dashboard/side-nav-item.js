@@ -1,9 +1,9 @@
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
-import { Box, ButtonBase } from '@mui/material';
+import { Box, ButtonBase, Typography } from '@mui/material';
 
 export const SideNavItem = (props) => {
-  const { active = false, external, icon, path, onClick, activeTitle, disableTitle } = props;
+  const { active = false, external, icon, path, onClick, activeTitle, disableTitle, title } = props;
 
   const linkProps = path
     ? external
@@ -28,57 +28,42 @@ export const SideNavItem = (props) => {
             display: 'flex',
             justifyContent: 'flex-start',
             px: '16px',
-            py: '6px',
+            py: '10px',
             textAlign: 'left',
-            // backgroundImage: active ? `url('/pink.png')` : `url('/dark.png')`,
-            backgroundImage: `url('/pink.png')`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            width: '100%'
+            width: '100%',
+            // borderRadius: 2,
+            backgroundColor: active ? '#FF80C3' : 'transparent',
+            '&:hover': {
+              backgroundColor: active ? '#FF80C3' : 'rgba(255,128,195,0.15)'
+            }
           }}
           {...linkProps}
         >
-          {/*icons*/}
           {icon && (
             <Box
               component="span"
               sx={{
                 alignItems: 'center',
-                color: '#ffffff',
+                color: active ? '#000000' : '#FF80C3',
                 display: 'inline-flex',
                 justifyContent: 'center',
-                mr: 2,
-                ...(active && {
-                  color: '#ffffff'
-                })
+                mr: 2
               }}
             >
               {icon}
             </Box>
           )}
-          {/*button text*/}
-          <Box
-            component="span"
-            sx={{
-              display: "flex"
-              // bgcolor:'white',
-              // color: '#FE22CA',
-              // flexGrow: 1,
-              // letterSpacing: '2px',
-              // fontSize: 15,
-              // fontFamily: 'Tahoma',
-              // fontWeight: 'bolder',
-              // lineHeight: '24px',
-              // ...(active && {
-              //   color: '#ED811A'
-              // }),
-              // ...(disabled && {
-              //   color: '#FE22CA'
-              // })
-            }}
-          >
-            {active ? activeTitle :  disableTitle}
+          <Box component="span" sx={{ display: 'flex', flexGrow: 1 }}>
+            {title ? (
+              <Typography variant="body2" sx={{
+                color: active ? '#001D2D' : '#E5E7EB',
+                fontWeight: 700
+              }}>
+                {title}
+              </Typography>
+            ) : (
+              active ? activeTitle : disableTitle
+            )}
           </Box>
         </ButtonBase>
       </li>

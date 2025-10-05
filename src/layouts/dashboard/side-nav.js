@@ -6,7 +6,9 @@ import {
   Stack,
   Typography,
   Grid,
-  Button
+  Button,
+  Collapse,
+  Divider
 } from '@mui/material';
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -24,6 +26,21 @@ import PrivacyPolicy from '../../pages/privacy';
 import { useAudioContext } from '../../utils/audioContext';
 import { NavbarContext } from '../../contexts/navbar-context';
 import { useGameInstance } from '../../contexts/game-context';
+import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
+import WeekendOutlinedIcon from '@mui/icons-material/WeekendOutlined';
+import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
+import BedOutlinedIcon from '@mui/icons-material/BedOutlined';
+import MovieOutlinedIcon from '@mui/icons-material/MovieOutlined';
+import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import DesignServicesOutlinedIcon from '@mui/icons-material/DesignServicesOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 
 const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL;
 
@@ -106,70 +123,81 @@ export const SideNav = () => {
 
   const items = [
     {
-      // title: 'Game',
-      activeTitle: (<img src={`${WEB_URL}/GameOrange.svg`} alt="game" width="100%" height="22"/>),
-      disableTitle: (<img src={`${WEB_URL}/Gamepink.svg`} alt="game" width="100%" height="22"/>),
-      path: '/',
-      icon: (
-        <img src={`${WEB_URL}/game.png`} alt="game" width="30"/>
-      )
+      title: 'Dashboard',
+      path: '/dashboard',
+      icon: (<DashboardOutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>)
+    },
+    {
+      title: 'Billings',
+      path: '/billings',
+      icon: (<ReceiptLongOutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>)
     }
   ];
+  // Mark Billings as active when on checkout as well
+  const normalizedPathname = pathname === '/checkout' ? '/billings' : pathname;
 
-  if (isAuthenticated) {
-    items.push(
-      {
-        // title: 'Account',
-        activeTitle: (
-          <img src={`${WEB_URL}/accountOrange.svg`} alt="account" width="100%" height="22"/>),
-        disableTitle: (
-          <img src={`${WEB_URL}/accountPink.svg`} alt="account" width="100%" height="22"/>),
-        path: '/account',
-        icon: (
-          <img src={`${WEB_URL}/user.png`} alt="account" width="30"/>
-        )
-      },
-      {
-        // title: 'Shop',
-        activeTitle: (<img src={`${WEB_URL}/shopOrange.svg`} alt="shop" width="100%" height="22"/>),
-        disableTitle: (<img src={`${WEB_URL}/shopPink.svg`} alt="shop" width="100%" height="22"/>),
-        path: '/shop',
-        icon: (
-          <img src={`${WEB_URL}/shopIcon.png`} alt="shop" width="30"/>
-        )
+  const [loftOpen, setLoftOpen] = React.useState(true);
+  const isLoftRoute = typeof pathname === 'string' && pathname.startsWith('/loft/');
+  const loftChildren = [
+    { title: 'Living Room', path: '/loft/living-room', icon: (<WeekendOutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>) },
+    { title: 'Pathway', path: '/loft/pathway', icon: (<EmojiObjectsOutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>) },
+    { title: 'Bedroom', path: '/loft/bedroom', icon: (<BedOutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>) },
+    { title: 'Media Room', path: '/loft/media-room', icon: (<MovieOutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>) },
+    { title: 'Kitchen', path: '/loft/kitchen', icon: (<RestaurantOutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>) },
+    { title: 'Closet/Store', path: '/loft/closet-store', icon: (<Inventory2OutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>) }
+  ];
 
-      },
-      {
-        // title: 'Logout',
-        activeTitle: (
-          <img src={`${WEB_URL}/LogoutOrange.svg`} alt="logout" width="100%" height="22"/>),
-        disableTitle: (
-          <img src={`${WEB_URL}/LogoutPink.svg`} alt="logout" width="100%" height="22"/>),
-        // path: '/',
-        icon: (
-          <img src={`${WEB_URL}/logout.png`} alt="logout" width="30"/>
-        ),
-        onClick: function () {
-          signOut();
-          clearPlayerPref();
-        }
-      }
-    );
-  } else {
-    items.push(
-      {
-        // title: 'Login',
-        activeTitle: (
-          <img src={`${WEB_URL}/loginOrange.svg`} alt="login" width="100%" height="22"/>),
-        disableTitle: (
-          <img src={`${WEB_URL}/loginPink.svg`} alt="login" width="100%" height="22"/>),
-        path: '/login',
-        icon: (
-          <img src={`${WEB_URL}/Login.png`} alt="login" width="30"/>
-        )
-      }
-    );
-  }
+  // if (isAuthenticated) {
+  //   items.push(
+  //     {
+  //       title: 'Account',
+  //       // activeTitle: (
+  //       //   <img src={`${WEB_URL}/accountOrange.svg`} alt="account" width="100%" height="22"/>),
+  //       // disableTitle: (
+  //       //   <img src={`${WEB_URL}/accountPink.svg`} alt="account" width="100%" height="22"/>),
+  //       path: '/account',
+  //       // icon: (
+  //       //   <img src={`${WEB_URL}/user.png`} alt="account" width="30"/>
+  //       // )
+  //     },
+  //     {
+  //       title: 'Account',
+  //       // activeTitle: (
+  //       //   <img src={`${WEB_URL}/accountOrange.svg`} alt="account" width="100%" height="22"/>),
+  //       // disableTitle: (
+  //       //   <img src={`${WEB_URL}/accountPink.svg`} alt="account" width="100%" height="22"/>),
+  //       path: '/account',
+  //       // icon: (
+  //       //   <img src={`${WEB_URL}/user.png`} alt="account" width="30"/>
+  //       // )
+  //     },
+  //     {
+  //       title: 'Account',
+  //       // activeTitle: (
+  //       //   <img src={`${WEB_URL}/accountOrange.svg`} alt="account" width="100%" height="22"/>),
+  //       // disableTitle: (
+  //       //   <img src={`${WEB_URL}/accountPink.svg`} alt="account" width="100%" height="22"/>),
+  //       path: '/account',
+  //       // icon: (
+  //       //   <img src={`${WEB_URL}/user.png`} alt="account" width="30"/>
+  //       // )
+  //     },
+  //   );
+  // } else {
+  //   items.push(
+  //     {
+  //       title: 'Account',
+  //       // activeTitle: (
+  //       //   <img src={`${WEB_URL}/accountOrange.svg`} alt="account" width="100%" height="22"/>),
+  //       // disableTitle: (
+  //       //   <img src={`${WEB_URL}/accountPink.svg`} alt="account" width="100%" height="22"/>),
+  //       path: '/account',
+  //       // icon: (
+  //       //   <img src={`${WEB_URL}/user.png`} alt="account" width="30"/>
+  //       // )
+  //     },
+  //   );
+  // }
 
   const content = (
     <Scrollbar
@@ -179,7 +207,7 @@ export const SideNav = () => {
           height: '100%'
         },
         '& .simplebar-scrollbar:before': {
-          background: '#ED811A'
+          background: '#FF80C3'
         }
       }}
     >
@@ -191,44 +219,22 @@ export const SideNav = () => {
           height: '100%',
           width: '100%'
         }}>
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'flex-start'
-        }}>
-          <Box onClick={handleClickOpen}>
-            <Information/>
-          </Box>
-          {/*expand menu icon*/}
-          <Box sx={{ width: '100%', textAlign: 'right' }}
-               onClick={toggleNavbar}>
-            <img src={`${WEB_URL}/expandMenu3.png`} alt="menu expand" width="30"
-                 style={{ cursor: 'pointer' }}/>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2, pt: 2 }}>
+          {/* <Logo height={20}/> */}
+          <img src="/hd.png" alt="Logo" style={{ width: '50%' }} />
+          <Box onClick={toggleNavbar} sx={{ cursor: 'pointer' }}>
+            <ChevronLeftIcon sx={{ color: '#FF80C3' }}/>
           </Box>
         </Box>
-        <Box>
-          <Box
-            sx={{
-              pb: 2
-            }}
-          >
-            <Logo/>
-          </Box>
-        </Box>
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-        >
-          <img src={`${WEB_URL}/wendycrash.png`}
-               width="90%"/>
-        </Box>
+        {/* <Box sx={{ px: 2, pt: 1, pb: 2 }}>
+          <Typography variant="caption" sx={{ color: '#93C5FD' }}>Pages</Typography>
+        </Box> */}
         <Box
           component="nav"
           sx={{
             flexGrow: 1,
             px: 2,
-            py: 3
+            py: 1
           }}
         >
           <Stack
@@ -240,18 +246,69 @@ export const SideNav = () => {
               m: 0
             }}
           >
-            {items.map((item, index) => (
+            {/* Top-level: Dashboard */}
+            {items.slice(0,1).map((item, index) => (
               <SideNavItem
                 key={index}
-                active={item.path === pathname}
+                active={item.path === normalizedPathname}
                 path={item.path}
                 icon={item.icon}
-                activeTitle={item.activeTitle}
-                disableTitle={item.disableTitle}
+                title={item.title}
                 onClick={item.onClick}
               />
             ))}
-            <Button onClick={handleToggleSound}>
+
+            {/* Loft Editor dropdown */}
+            <li>
+              <Button
+                onClick={() => setLoftOpen((prev) => !prev)}
+                sx={{
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  textTransform: 'none',
+                  color: '#E5E7EB',
+                  width: '100%',
+                  px: '12px',
+                  py: '8px',
+                  backgroundColor: 'transparent',
+                  '&:hover': { backgroundColor: 'rgba(255,128,195,0.15)' }
+                }}
+              >
+                <Box component="span" sx={{ mr: 2, display: 'inline-flex', color: '#E5E7EB' }}>
+                  <DesignServicesOutlinedIcon sx={{ fontSize: 22, color: '#FF80C3' }}/>
+                </Box>
+                <Typography variant="body2" sx={{ color: '#E5E7EB', fontWeight: 700}}>
+                  Loft Editor
+                </Typography>
+                {loftOpen ? <ExpandLessIcon sx={{ color: '#FF80C3' }}/> : <ExpandMoreIcon sx={{ color: '#FF80C3' }}/>}
+              </Button>
+            </li>
+            <Collapse in={loftOpen} timeout="auto" unmountOnExit>
+              <Box sx={{ pl: 3 }}>
+                {loftChildren.map((child, idx) => (
+                  <SideNavItem
+                    key={`loft-${idx}`}
+                    active={child.path && normalizedPathname === child.path}
+                    path={child.path}
+                    icon={child.icon}
+                    title={child.title}
+                  />
+                ))}
+              </Box>
+            </Collapse>
+
+            {/* Remaining items */}
+            {items.slice(1).map((item, index) => (
+              <SideNavItem
+                key={`rest-${index}`}
+                active={item.path === normalizedPathname}
+                path={item.path}
+                icon={item.icon}
+                title={item.title}
+                onClick={item.onClick}
+              />
+            ))}
+            {/* <Button onClick={handleToggleSound}>
               <Box sx={{ display: 'flex', justifyContent: 'space- between', width: '100%' }}>
                 <img style={{ marginLeft: '7px' }}
                      src={`${WEB_URL}/sound${isSoundOn ? 'On' : 'Off'}.png`} alt="sound control"
@@ -260,48 +317,45 @@ export const SideNav = () => {
                      src={`${WEB_URL}/sound${isSoundOn ? 'OnPink' : 'OffOrange'}.svg`}
                      alt="sound control" width="100%" height="22"/>
               </Box>
-            </Button>
+            </Button> */}
           </Stack>
         </Box>
-        <Box sx={{
-          p: 3,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: 'auto'
-        }}>
-          <Typography sx={{
-            display: 'flex',
-            color: '#AD2F91',
-            fontFamily: 'Tahoma',
-            fontSize: { xs: '13px', sm: '13px', md: '13px', lg: '13px', xl: '13px' },
-            '@media (min-width: 1201px) and (max-height: 1353px)': {
-              fontSize: '13px'
-            },
-            // Override fontSize for specific screen sizes
-            '@media (min-width: 1280px) and (max-height: 800px)': {
-              display: 'flex'
-            },
-            '@media (min-width: 1203px) and (max-height: 1360px)': {
-              fontSize: '13px'
-            },
-            width: 'auto'
-          }}>
-            <span onClick={handlePrivacyOpen} style={{ cursor: 'pointer' }}>Privacy Policy</span><b
-            style={{ color: '#EC821B', marginLeft: 5, marginRight: 5 }}>|</b> <span
-            onClick={handleTermsOpen} style={{ cursor: 'pointer' }}>Terms and Conditions</span>
-
-            <PrivacyPolicy open={openPrivacy} onClose={handlePrivacyClose}/>
-            <TermsAndConditions open={openTerms} onClose={handleTermsClose}/>
-
-            {/*<Box onClick={handlePrivacyOpen}>*/}
-            {/*  <PrivacyPolicy/>*/}
-            {/*</Box>*/}
-            {/*<Box onClick={handleTermsOpen}>*/}
-            {/*  <TermsAndConditions/>*/}
-            {/*</Box>*/}
-          </Typography>
+        <Box sx={{ px: 2, pb: 2 }}>
+          <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)', mb: 1 }} />
+          <Stack
+            component="ul"
+            spacing={0.5}
+            sx={{
+              listStyle: 'none',
+              p: 0,
+              m: 0
+            }}
+          >
+            {isAuthenticated ? (
+              <SideNavItem
+                icon={<LogoutOutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>} 
+                title="Logout"
+                onClick={() => { try { signOut(); } finally { router.replace('/'); } }}
+              />
+            ) : (
+              <SideNavItem
+                icon={<LoginOutlinedIcon sx={{ fontSize: 22, color: 'inherit' }}/>} 
+                title="Login"
+                onClick={() => router.replace('/login')}
+              />
+            )}
+          </Stack>
         </Box>
+        {/* <Box sx={{ p: 2 }}>
+          <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)' }}/>
+          <Typography sx={{ color: '#9CA3AF', mt: 2 }} variant="caption">
+            <span onClick={handlePrivacyOpen} style={{ cursor: 'pointer' }}>Privacy Policy</span>
+            <b style={{ color: '#EC821B', marginLeft: 5, marginRight: 5 }}>|</b>
+            <span onClick={handleTermsOpen} style={{ cursor: 'pointer' }}>Terms and Conditions</span>
+          </Typography>
+          <PrivacyPolicy open={openPrivacy} onClose={handlePrivacyClose}/>
+          <TermsAndConditions open={openTerms} onClose={handleTermsClose}/>
+        </Box> */}
       </Box>
     </Scrollbar>
   );
@@ -309,27 +363,27 @@ export const SideNav = () => {
     <>
       <Grid container className="Sidebar"
       >
-        {
-          !navExpand && (
-            <img
-              src={`${WEB_URL}/expandMenu4.png`}
-              alt="menu expand"
-              width="30"
-              style={{ cursor: 'pointer', position: 'absolute' }}
+        { !navExpand && (
+          <ChevronRightIcon
               onClick={toggleNavbar}
-            />
-          )
-        }
+            sx={{
+              position: 'absolute',
+              cursor: 'pointer',
+              color: '#FF80C3',
+              fontSize: 28
+            }}
+          />
+        )}
         <Drawer
           anchor="left"
           onClose={toggleNavbar}
           open={navExpand}
           PaperProps={{
             sx: {
-              backgroundColor: 'rgb(253,229,209)',
-              border: '7px solid rgb(173, 47, 145)',
-              borderRadius: router.pathname === '/' ? '0' : '0 20px 20px 0',
-              width: 310
+              backgroundColor: '#001D2D',
+              border: '0',
+              borderRadius: 0,
+              width: 300
             }
           }}
           variant="persistent"

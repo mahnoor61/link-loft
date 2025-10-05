@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import NextLink from 'next/link';
 
-export const Logo = () => {
+export const Logo = ({ height = 200 }) => {
   const theme = useTheme();
   const fillColor = theme.palette.primary.main;
   const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL;
@@ -28,7 +28,7 @@ export const Logo = () => {
           <img
             src={`${WEB_URL}/logo.png`}
             alt="Logo"
-            style={{ height: 200 }}/>
+            style={{ height }}/>
         </div>
       </Box>
 

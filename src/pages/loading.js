@@ -8,14 +8,41 @@ import {
   Stack,
   Avatar
 } from '@mui/material';
+import { useAuth } from '../hooks/use-auth';
+import { useEffect } from 'react';
 const WEB_URL = process.env.NEXT_PUBLIC_WEB_URL;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 export default function LoadingScreen() {
   const router = useRouter();
-  const { name, username, avatar } = router.query;
+  const { user, isAuthenticated } = useAuth();
+  const { name, username, avatar, email: qEmail } = router.query;
 
-  const displayName = typeof name === 'string' && name.length > 0 ? decodeURIComponent(name) : 'Profile Name';
-  const handle = typeof username === 'string' && username.length > 0 ? `@${decodeURIComponent(username).replace(/^@/, '')}` : '@player';
-  const avatarSrc = typeof avatar === 'string' && avatar.length > 0 ? decodeURIComponent(avatar) : '/loft3.png';
+  // Resolve display fields with priority: authenticated user -> query params -> defaults
+  const displayName = (user?.username || user?.name)
+    || (typeof name === 'string' && name.length > 0 ? decodeURIComponent(name) : 'Profile Name');
+
+  const handle = user?.username
+    ? `@${user.username}`
+    : (typeof username === 'string' && username.length > 0 ? `@${decodeURIComponent(username).replace(/^@/, '')}` : '@player');
+
+  const email = user?.email
+    || (typeof qEmail === 'string' && qEmail.length > 0 ? decodeURIComponent(qEmail) : 'player@example.com');
+
+  const rawPhoto = user?.profile_photo
+    || (typeof avatar === 'string' && avatar.length > 0 ? decodeURIComponent(avatar) : '');
+  const avatarSrc = rawPhoto ? (rawPhoto.startsWith('http') ? rawPhoto : `${API_BASE_URL}${rawPhoto}`) : '/loft3.png';
+
+  // After 10 seconds, redirect based on auth state
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (isAuthenticated) {
+        router.replace('/dashboard');
+      } else {
+        router.replace('/');
+      }
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, [isAuthenticated, router]);
 
   return (
     <>
@@ -87,11 +114,12 @@ export default function LoadingScreen() {
               }}
               elevation={0}
             >
-              <Stack spacing={2} alignItems="center">
+              <Stack spacing={1.2} alignItems="center">
                 <Avatar src={avatarSrc} alt="avatar" sx={{ width: 120, height: 120 }} />
                 <Stack spacing={0} alignItems="center">
                   <Typography sx={{ color: '#FFFFFF', fontWeight: 600 }}>{displayName}</Typography>
-                  <Typography sx={{ color: 'rgba(255,255,255,0.8)', fontSize: 12 }}>{handle}</Typography>
+                  {/* <Typography sx={{ color: 'rgba(255,255,255,0.85)', fontSize: 12 }}>{handle}</Typography> */}
+                  <Typography sx={{ color: 'rgba(255,255,255,0.75)', fontSize: 12 }}>{email}</Typography>
                 </Stack>
               </Stack>
             </Card>
