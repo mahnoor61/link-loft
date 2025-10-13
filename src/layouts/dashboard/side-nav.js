@@ -18,6 +18,7 @@ import { usePopover } from 'src/hooks/use-popover';
 import { Layout as AuthLayout } from '../auth/layout';
 import { useAuth } from '../../hooks/use-auth';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Information from '../../pages/information';
@@ -221,7 +222,9 @@ export const SideNav = () => {
         }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2, pt: 2 }}>
           {/* <Logo height={20}/> */}
-          <img src="/hd.png" alt="Logo" style={{ width: '50%' }} />
+          <Link href="/" style={{ display: 'inline-flex' }}>
+            <img src="/hd.png" alt="Logo" style={{ width: '50%', cursor: 'pointer' }} />
+          </Link>
           <Box onClick={toggleNavbar} sx={{ cursor: 'pointer' }}>
             <ChevronLeftIcon sx={{ color: '#FF80C3' }}/>
           </Box>

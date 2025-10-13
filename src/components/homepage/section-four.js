@@ -1,4 +1,5 @@
 import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material';
+import Link from 'next/link';
 import { useTheme } from '@mui/material/styles';
 
 const plans = [
@@ -72,11 +73,13 @@ export default function SectionFour() {
                 <Typography variant="h3" sx={{ fontWeight: 800 }}>{plan.price}</Typography>
               </Stack>
               <Box sx={{ mt: 1, m:3 }}>
-                <Button variant={plan.ctaVariant} size="large" sx={{ borderRadius: 999, 
-                  // ...(plan.ctaVariant === 'contained' && { '&:hover': { backgroundColor: 'primary.main' } })
-                   }}>
-                  Get Started
-                </Button>
+                <Link href="/billings" style={{ textDecoration: 'none' }}>
+                  <Button variant={plan.ctaVariant} size="large" sx={{ borderRadius: 999, 
+                    // ...(plan.ctaVariant === 'contained' && { '&:hover': { backgroundColor: 'primary.main' } })
+                     }}>
+                    Get Started
+                  </Button>
+                </Link>
               </Box>
               <Box sx={{ mt: 2, borderTop: `1px solid ${theme.palette.neutral[200]}` }}>
                 {features.map((row, rowIndex) => (
