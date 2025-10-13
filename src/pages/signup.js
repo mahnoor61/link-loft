@@ -137,9 +137,9 @@ const providerId = data?.providerId;
                 {/* <IconButton onClick={() => handleSocialSignUp('facebook')} size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="facebook">
                   <FacebookIcon fontSize="small" />
                 </IconButton> */}
-                <IconButton onClick={() => handleSocialSignUp('apple')} size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="apple">
+                {/* <IconButton onClick={() => handleSocialSignUp('apple')} size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="apple">
                   <AppleIcon fontSize="small" />
-                </IconButton>
+                </IconButton> */}
                 <IconButton onClick={() => handleSocialSignUp('google')} size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="google">
                   <GoogleIcon fontSize="small" />
                 </IconButton>
