@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import PrivacyContent from './privacyContent';
+import Navbar from 'src/components/homepage/navbar';
+import Footer from 'src/components/homepage/footer';
 
 export default function PrivacyPolicy() {
   return (
     <Box sx={{ bgcolor: '#fff' }}>
-      <Container maxWidth="md" sx={{ py: 4 }}>
+      <Navbar />
+      <Container maxWidth="md" sx={{ py: 15 }}>
         <Typography sx={{ mb: 2 }} variant="h4" component="div">
         PRIVACY POLICY — LinkLoft Last Updated: October 2025
         </Typography>
@@ -13,6 +16,7 @@ export default function PrivacyPolicy() {
           <PrivacyContent />
         </Typography>
       </Container>
+      <Footer />
     </Box>
   );
 }

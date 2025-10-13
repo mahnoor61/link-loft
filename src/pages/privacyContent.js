@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
+import NextLink from 'next/link';
 
 export default function PrivacyContent() {
   return (
@@ -107,12 +108,12 @@ export default function PrivacyContent() {
 
       <Typography variant="body1"><b>Contact</b></Typography>
       <Typography color="text.secondary" variant="body1">
-        For questions about privacy or data use, email hi@linkloft.me.
+        For questions about privacy or data use, email <a href="mailto:hi@linkloft.me">hi@linkloft.me</a>.
       </Typography>
       <br/>
 
       <Typography color="text.secondary" variant="body2">
-        © 2025 LinkLoft. All rights reserved. | <a href="/terms">Terms</a> | <a href="/privacy">Privacy</a>
+        © 2025 LinkLoft. All rights reserved. | <NextLink href="/terms">Terms</NextLink> | <NextLink href="/privacy">Privacy</NextLink>
       </Typography>
     </Box>
   );
