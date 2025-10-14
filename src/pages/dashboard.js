@@ -62,11 +62,11 @@ const TopLink = ({ icon, name, clicks, onClick }) => (
 const RightPanel = () => {
   const { user } = useAuth();
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-  const displayName = user?.username || user?.name || 'Demo User';
-  const email = user?.email || 'guest@example.com';
+  const displayName = user?.profile_name || user?.username || user?.name || 'Guest User';
+  const handle = user?.profile_name || 'Guest User';
   const rawPhoto = user?.profile_photo;
   const avatarSrc = rawPhoto ? (rawPhoto.startsWith('http') ? rawPhoto : `${API_BASE_URL}${rawPhoto}`) : '/user.png';
-
+console.log("user", user);
   return (
     <Box sx={{
       position: 'sticky',
@@ -110,7 +110,7 @@ const RightPanel = () => {
                 lineHeight: 1.2
               }}
             >
-              {email}
+              linkloft.me/{handle}
             </Typography>
           </CardContent>
         </Card>
@@ -244,7 +244,7 @@ const Page = () => {
               <Typography variant="caption" sx={{ display: 'block', color: '#6B7280', mb: 2 }}>Dashboard</Typography>
               <Typography variant="h4" sx={{ fontWeight: 900, mb: 1 }}>WELCOME BACK</Typography>
               <Typography variant="subtitle1" sx={{ color: '#6B7280', mb: 3 }}>
-                Hello, { (user?.username || user?.name) ? (user.username || user.name) : 'Demo User' } 👋
+                Hello, { (user?.profile_name || user?.username || user?.name) ? (user?.profile_name || user?.username || user?.name) : 'Demo User' } 👋
               </Typography>
 
               <Card sx={{ p: 2, borderRadius: 3, mb: 3 }}>

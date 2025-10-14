@@ -43,16 +43,17 @@ const Page = () => {
   }, [profilePreview]);
 
   const formik = useFormik({
-    initialValues: { username: '', email: '', password: '' },
+    initialValues: { username: '', profile_name: '', email: '', password: '' },
     validationSchema: Yup.object({
       username: Yup.string().min(2).max(255).required('Username is required'),
+      profile_name: Yup.string().min(2).max(255).required('Profile name is required'),
       email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
       password: Yup.string().min(6, 'At least 6 characters').required('Password is required')
     }),
     onSubmit: async (values, helpers) => {
       helpers.setSubmitting(true);
       try {
-        const data = await signUp({ username: values.username, email: values.email, password: values.password, profilePhoto });
+        const data = await signUp({ username: values.username, profileName: values.profile_name, email: values.email, password: values.password, profilePhoto });
         toast.success('Verification code sent to your email');
         router.push(`/verify_login?token=${data.unique_id}`);
       } catch (err) {
@@ -86,7 +87,7 @@ const Page = () => {
       const photoURL = data?.user?.photoURL || '';
       const resp = await axios.post(
         `${API_BASE_URL}/api/signin-with/google`,
-        { email, username: displayName, signup_method: providerId , emailVerified, profile_photo: photoURL },
+        { email, username: displayName, signup_method: providerId , emailVerified, profile_photo: photoURL, profile_name: displayName },
         { headers: { 'Content-Type': 'application/json' } }
       );
       const payload = resp?.data?.data || {};
@@ -94,7 +95,7 @@ const Page = () => {
       if (userToken) window.localStorage.setItem('token', userToken);
       toast.success('Signed up successfully');
       // Hydrate context immediately (payload contains user fields per backend)
-      if (payload) applyAuthenticatedUser(payload); else await refreshAuth();
+      if (payload?.user) applyAuthenticatedUser(payload.user); else await refreshAuth();
       router.replace('/dashboard');
     } catch (e) {
       console.error(e);
@@ -126,7 +127,7 @@ const Page = () => {
           <Box>
             <Typography variant="h4" sx={{ color: '#fff', fontWeight: 700, mt:5 }}>Welcome!</Typography>
             <Typography variant="caption" sx={{ color: '#fff'}}>
-              Use these awesome forms to login or create new account in your project for free.
+              Open your loft and start building your 360° interactive world.
             </Typography>
           </Box>
         </Box>
@@ -166,6 +167,17 @@ const Page = () => {
                     onBlur={formik.handleBlur}
                     error={!!(formik.touched.username && formik.errors.username)}
                     helperText={formik.touched.username && formik.errors.username}
+                    fullWidth
+                  />
+                  <TextField
+                    name="profile_name"
+                    label="Profile name"
+                    size="small"
+                    value={formik.values.profile_name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={!!(formik.touched.profile_name && formik.errors.profile_name)}
+                    helperText={formik.touched.profile_name && formik.errors.profile_name}
                     fullWidth
                   />
                   <TextField

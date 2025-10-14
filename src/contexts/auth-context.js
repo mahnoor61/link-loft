@@ -129,12 +129,15 @@ export const AuthProvider = (props) => {
     }
   };
 
-  useEffect(
-    () => {
-      initialize();
-    },
-    []
-  );
+  useEffect(() => {
+    initialize();
+    // In case of route-based reloads or late provider mount, attempt a quick refresh once
+    // after the first paint to ensure auth is hydrated.
+    if (!state.isAuthenticated) {
+      const id = setTimeout(() => { refreshAuth(); }, 0);
+      return () => clearTimeout(id);
+    }
+  }, []);
 
   const signIn = async ({ email, password }) => {
     try {
@@ -162,10 +165,11 @@ export const AuthProvider = (props) => {
     }
   };
 
-  const signUp = async ({ email, username, password, profilePhoto }) => {
+  const signUp = async ({ email, username, password, profilePhoto, profileName }) => {
     try {
       const formData = new FormData();
       formData.append('username', username);
+      if (profileName) formData.append('profile_name', profileName);
       formData.append('email', email);
       formData.append('password', password);
       formData.append('signup_method', 'manual');

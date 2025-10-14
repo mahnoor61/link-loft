@@ -22,8 +22,8 @@ const plans = [
 const Page = () => {
   const { user } = useAuth();
   const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-  const displayName = user?.username || user?.name || 'Profile Name';
-  const email = user?.email || 'player@example.com';
+  const displayName = user?.profile_name || user?.username || user?.name || 'Guest User';
+  const handle = user?.profile_name || 'Guest User';
   const rawPhoto = user?.profile_photo || '';
   const avatar = rawPhoto ? (rawPhoto.startsWith('http') ? rawPhoto : `${API_BASE_URL}${rawPhoto}`) : '/user.png';
 
@@ -94,7 +94,7 @@ const Page = () => {
               </Box>
             </Box>
                     <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>{displayName}</Typography>
-                    <Typography variant="caption" sx={{ color: '#6B7280' }}>{email}</Typography>
+                    <Typography variant="caption" sx={{ color: '#6B7280' }}>linkloft.me/{handle}</Typography>
                   </Box>
                 </Box>
                 <Card sx={{ borderRadius: 3, p: 2, background: 'linear-gradient(180deg, #FF8FC7 0%, #FF7CBF 100%)', color: 'white' }}>

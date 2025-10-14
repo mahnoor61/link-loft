@@ -93,7 +93,8 @@ const Page = () => {
           username: displayName,
           emailVerified: data?.user?.emailVerified || data?.additionalUserInfo?.profile?.emailVerified,
           signup_method: 'google',
-          profile_photo: photoURL || ''
+          profile_photo: photoURL || '',
+          profile_name: displayName
         },
         {
           headers: {
@@ -106,7 +107,7 @@ const Page = () => {
       toast.success('Login successfully');
       window.localStorage.setItem('token', userToken);
       // Hydrate context immediately if backend returned user, otherwise refresh
-      if (payload) applyAuthenticatedUser(payload); else await refreshAuth();
+      if (payload?.user) applyAuthenticatedUser(payload.user); else await refreshAuth();
       router.replace('/dashboard');
       setGoogleButtonDisabled(false);
     } catch (error) {
