@@ -107,6 +107,28 @@ export const AuthProvider = (props) => {
 
   };
 
+  const refreshAuth = async () => {
+    try {
+      const token = window.localStorage.getItem('token');
+      if (!token) {
+        return false;
+      }
+      const response = await axios.get(API_BASE_URL + '/api/user/auth', {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        }
+      });
+      dispatch({
+        type: HANDLERS.SIGN_IN,
+        payload: response.data.data
+      });
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
+
   useEffect(
     () => {
       initialize();
@@ -224,6 +246,11 @@ export const AuthProvider = (props) => {
 
   };
 
+  const applyAuthenticatedUser = (user) => {
+    if (!user) return;
+    dispatch({ type: HANDLERS.SIGN_IN, payload: user });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -233,7 +260,9 @@ export const AuthProvider = (props) => {
         verifyRegistration,
         forgotPassword,
         resetPassword,
-        signOut
+        signOut,
+        refreshAuth,
+        applyAuthenticatedUser
       }}
     >
       {children}

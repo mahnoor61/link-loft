@@ -30,7 +30,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 import toast from 'react-hot-toast';
 
 const Page = () => {
-  const {signUp} = useAuth();
+  const {signUp, refreshAuth, applyAuthenticatedUser} = useAuth();
   const [rememberMe, setRememberMe] = useState(true);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [profilePreview, setProfilePreview] = useState(null);
@@ -81,17 +81,21 @@ const Page = () => {
       if (!API_BASE_URL) throw new Error('API base URL is not configured');
 
       const displayName = data?.user?.displayName || data?.additionalUserInfo?.profile?.name;
-const emailVerified = data?.user?.emailVerified || data?.additionalUserInfo?.profile?.emailVerified;
-const providerId = data?.providerId;
+      const emailVerified = data?.user?.emailVerified || data?.additionalUserInfo?.profile?.emailVerified;
+      const providerId = data?.providerId || 'google';
+      const photoURL = data?.user?.photoURL || '';
       const resp = await axios.post(
         `${API_BASE_URL}/api/signin-with/google`,
-        { email, username: displayName, signup_method: providerId ,emailVerified },
+        { email, username: displayName, signup_method: providerId , emailVerified, profile_photo: photoURL },
         { headers: { 'Content-Type': 'application/json' } }
       );
-      const userToken = resp?.data?.data?.token || resp?.data?.data?.token;
+      const payload = resp?.data?.data || {};
+      const userToken = payload?.token;
       if (userToken) window.localStorage.setItem('token', userToken);
       toast.success('Signed up successfully');
-      // window.location.replace('/');
+      // Hydrate context immediately (payload contains user fields per backend)
+      if (payload) applyAuthenticatedUser(payload); else await refreshAuth();
+      router.replace('/dashboard');
     } catch (e) {
       console.error(e);
       toast.error(e?.message || 'Social sign-up failed');

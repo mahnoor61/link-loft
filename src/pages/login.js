@@ -9,8 +9,9 @@ import {
   Stack,
   TextField,
   Typography,
-  CircularProgress, Card, Grid, FormControlLabel, Switch
+  CircularProgress, Card, Grid, FormControlLabel, Switch, IconButton, Divider
 } from '@mui/material';
+import GoogleIcon from '@mui/icons-material/Google';
 import toast from 'react-hot-toast';
 import { useMounted } from '../hooks/use-mounted';
 import * as React from 'react';
@@ -32,7 +33,7 @@ const Page = () => {
   //   localStorage.setItem('transactionId', transactionId);
   // }
 
-  const { signIn } = useAuth();
+  const { signIn, refreshAuth, applyAuthenticatedUser } = useAuth();
   const isMounted = useMounted();
 
   const formik = useFormik({
@@ -82,14 +83,17 @@ const Page = () => {
     setGoogleButtonDisabled(true);
     // user data comes in data
     const data = await signInWithGoogle();
-    const { email } = data.user;
+    const { email, photoURL } = data.user;
     const displayName = data?.user?.displayName || data?.additionalUserInfo?.profile?.name || '';
     await window.localStorage.setItem('userName', displayName);
     try {
       const response = await axios.post(API_BASE_URL + '/api/signin-with/google',
         {
           email,
-          username: displayName
+          username: displayName,
+          emailVerified: data?.user?.emailVerified || data?.additionalUserInfo?.profile?.emailVerified,
+          signup_method: 'google',
+          profile_photo: photoURL || ''
         },
         {
           headers: {
@@ -97,12 +101,13 @@ const Page = () => {
           }
         }
       );
-      const userToken = response.data.data.token;
+      const payload = response.data.data || {};
+      const userToken = payload.token;
       toast.success('Login successfully');
       window.localStorage.setItem('token', userToken);
-      // await signIn({ email,method:'google'});
-      // it replace with new url and also reload the page this method is used
-      window.location.replace('/');
+      // Hydrate context immediately if backend returned user, otherwise refresh
+      if (payload) applyAuthenticatedUser(payload); else await refreshAuth();
+      router.replace('/dashboard');
       setGoogleButtonDisabled(false);
     } catch (error) {
       console.log(error);
@@ -184,6 +189,18 @@ const Page = () => {
                         'Sign in'
                       )}
                     </Button>
+
+                    <Stack direction="row" alignItems="center" spacing={2} sx={{ my: 1 }}>
+                      <Divider sx={{ flex: 1 }} />
+                      <Typography variant="caption" color="text.secondary">or</Typography>
+                      <Divider sx={{ flex: 1 }} />
+                    </Stack>
+
+                    <Stack direction="row" spacing={2} justifyContent="center">
+                      <IconButton onClick={handleGoogleSignIn} size="small" sx={{ border: '1px solid #E6E8F0' }} aria-label="google" disabled={googleButtonDisabled}>
+                        <GoogleIcon fontSize="small" />
+                      </IconButton>
+                    </Stack>
                   </Stack>
                 </form>
               </Box>
